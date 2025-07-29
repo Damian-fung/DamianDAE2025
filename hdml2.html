@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>彩虹社區 - 討論區專區</title>
+    <style>
+        /* 基礎樣式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* 頂部導航欄 */
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            padding: 15px 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: rgba(243, 237, 237, 0.9);
+            font-weight: bold;
+        }
+        
+        .logo-text {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #ff416c, #ff4b2b, #ff6b6b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #444;
+            font-weight: 600;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover {
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            color: white;
+        }
+        
+        /* 討論區專區標題 */
+        .section-title {
+            text-align: center;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .section-title h1 {
+            font-size: 42px;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h1:after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(90deg, #ff416c, #ff4b2b, #ff6b6b);
+            border-radius: 2px;
+        }
+        
+        /* 討論區內容 */
+        .forum-container {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+        }
+        
+        .posts-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        /* 討論帖卡片 */
+        .post-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 5px solid #ff6b6b;
+        }
+        
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed #eee;
+        }
+        
+        .post-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #ff416c;
+        }
+        
+        .post-meta {
+            color: #777;
+            font-size: 14px;
+        }
+        
+        /* 討論區專用文字樣式 */
+        .forum-text {
+            background: white;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            font-size: 17px;
+            line-height: 1.8;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+        
+        .forum-text:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, #ff416c, #ff4b2b);
+            border-radius: 5px 0 0 5px;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, rgba(255,107,107,0.2), rgba(255,107,107,0.1));
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px dashed #eee;
+        }
+        
+        .tags {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: #f5f5f5;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .action-btn:hover {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        /* 側邊欄 */
+        .sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            height: fit-content;
+        }
+        
+        .sidebar h2 {
+            font-size: 22px;
+            color: #ff416c;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .trending-topics, .popular-tags {
+            margin-bottom: 30px;
+        }
+        
+        .topic-list, .tag-list {
+            list-style: none;
+        }
+        
+        .topic-list li, .tag-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .topic-list li:before, .tag-list li:before {
+            content: "•";
+            color: #ff6b6b;
+            font-size: 20px;
+            margin-right: 10px;
+        }
+        
+        .topic-list a, .tag-list a {
+            text-decoration: none;
+            color: #555;
+            transition: color 0.3s ease;
+        }
+        
+        .topic-list a:hover, .tag-list a:hover {
+            color: #ff416c;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            text-align: center;
+        }
+        
+        .stat-box {
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            padding: 15px;
+            border-radius: 10px;
+            color: white;
+        }
+        
+        .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+        }
+        
+        /* 發文按鈕 */
+        .create-post-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(255, 75, 43, 0.4);
+        }
+        
+        .create-post-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 75, 43, 0.6);
+        }
+        
+        /* 頁腳 */
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            border-radius: 15px;
+        }
+        
+        /* 響應式設計 */
+        @media (max-width: 900px) {
+            .forum-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                margin-top: 30px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">彩</div>
+                <div class="logo-text">彩虹社區</div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">首頁</a></li>
+                    <li><a href="#">熱門話題</a></li>
+                    <li><a href="#">分類專區</a></li>
+                    <li><a href="#">會員中心</a></li>
+                    <li><a href="#">關於我們</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <div class="section-title">
+            <h1>討論區專區</h1>
+        </div>
+        
+        <div class="forum-container">
+            <div class="posts-container">
+                <!-- 討論帖 1 -->
+                <div class="post-card">
+                    <div class="post-header">
+                        <div class="post-title">如何製作一個完美的彩虹動畫效果？</div>
+                        <div class="post-meta">發布者: 彩虹達人 • 2023-06-15 • 瀏覽: 1,245</div>
+                    </div>
+                    
+                    <div class="forum-text">
+                        <p>最近在網站上看到許多<span class="highlight">令人驚豔的彩虹動畫效果</span>，想請教各位高手是如何實現的？</p>
+                        <p>我嘗試使用CSS的<code>linear-gradient</code>和<code>animation</code>屬性，但在不同瀏覽器上的顯示效果不一致，特別是在移動設備上。</p>
+                        <p>是否有推薦的JavaScript庫可以簡化這個過程？或者有更好的跨瀏覽器解決方案？</p>
+                    </div>
+                    
+                    <div class="post-footer">
+                        <div class="tags">
+                            <div class="tag">CSS動畫</div>
+                            <div class="tag">網頁設計</div>
+                            <div class="tag">前端開發</div>
+                        </div>
+                        <div class="actions">
+                            <button class="action-btn">👍 128</button>
+                            <button class="action-btn">💬 42</button>
+                            <button class="action-btn">🔖 收藏</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 討論帖 2 -->
+                <div class="post-card">
+                    <div class="post-header">
+                        <div class="post-title">分享：使用SVG創建彩虹圖標的實用技巧</div>
+                        <div class="post-meta">發布者: 設計小天才 • 2023-06-12 • 瀏覽: 892</div>
+                    </div>
+                    
+                    <div class="forum-text">
+                        <p>今天想和大家分享一些<span class="highlight">使用SVG創建彩虹圖標的技巧</span>：</p>
+                        <p>1. 使用<code>&lt;linearGradient&gt;</code>實現平滑的彩虹漸變效果</p>
+                        <p>2. 通過<code>stroke-dasharray</code>和<code>stroke-dashoffset</code>創建動畫</p>
+                        <p>3. 響應式設計技巧：使用<code>viewBox</code>確保在不同設備上完美顯示</p>
+                        <p>4. 優化SVG代碼，減少文件大小</p>
+                        <p>歡迎大家分享自己的經驗和技巧！</p>
+                    </div>
+                    
+                    <div class="post-footer">
+                        <div class="tags">
+                            <div class="tag">SVG</div>
+                            <div class="tag">圖標設計</div>
+                        </div>
+                        <div class="actions">
+                            <button class="action-btn">👍 215</button>
+                            <button class="action-btn">💬 67</button>
+                            <button class="action-btn">🔖 收藏</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 討論帖 3 -->
+                <div class="post-card">
+                    <div class="post-header">
+                        <div class="post-title">求助：如何實現文字彩虹邊框效果？</div>
+                        <div class="post-meta">發布者: 前端新手 • 2023-06-10 • 瀏覽: 1,532</div>
+                    </div>
+                    
+                    <div class="forum-text">
+                        <p>我正在嘗試為網站標題創建一個<span class="highlight">彩虹邊框文字效果</span>，但遇到了一些問題：</p>
+                        <p>• 使用<code>text-shadow</code>多層陰影效果在移動設備上性能不佳</p>
+                        <p>• 嘗試使用<code>background-clip: text</code>但瀏覽器支持度不一致</p>
+                        <p>• SVG方案雖然效果好但缺乏動態修改的靈活性</p>
+                        <p>請問有更好的解決方案嗎？希望能在所有現代瀏覽器上流暢顯示，同時保持良好的性能。</p>
+                    </div>
+                    
+                    <div class="post-footer">
+                        <div class="tags">
+                            <div class="tag">CSS技巧</div>
+                            <div class="tag">文字效果</div>
+                            <div class="tag">網頁性能</div>
+                        </div>
+                        <div class="actions">
+                            <button class="action-btn">👍 98</button>
+                            <button class="action-btn">💬 31</button>
+                            <button class="action-btn">🔖 收藏</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 側邊欄 -->
+            <div class="sidebar">
+                <div class="trending-topics">
+                    <h2>🔥 熱門話題</h2>
+                    <ul class="topic-list">
+                        <li><a href="#">CSS漸變的進階應用技巧</a></li>
+                        <li><a href="#">2023年網頁動畫趨勢分析</a></li>
+                        <li><a href="#">使用Canvas實現粒子動畫</a></li>
+                        <li><a href="#">響應式設計的常見陷阱與解決方案</a></li>
+                        <li><a href="#">前端性能優化實戰技巧</a></li>
+                    </ul>
+                </div>
+                
+                <div class="popular-tags">
+                    <h2>🏷️ 熱門標籤</h2>
+                    <ul class="tag-list">
+                        <li><a href="#">#CSS動畫</a></li>
+                        <li><a href="#">#JavaScript</a></li>
+                        <li><a href="#">#響應式設計</a></li>
+                        <li><a href="#">#UI設計</a></li>
+                        <li><a href="#">#性能優化</a></li>
+                        <li><a href="#">#漸變效果</a></li>
+                    </ul>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-number">5,248</div>
+                        <div class="stat-label">討論主題</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">24,891</div>
+                        <div class="stat-label">會員人數</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">128,765</div>
+                        <div class="stat-label">回覆數量</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">42</div>
+                        <div class="stat-label">在線會員</div>
+                    </div>
+                </div>
+                
+                <button class="create-post-btn">✏️ 發表新主題</button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 彩虹社區討論區 保留所有權利 | 設計與開發：前端創意團隊</p>
+            <p>聯繫我們: contact@rainbow-community.com | 隱私政策 | 使用條款</p>
+        </footer>
+    </div>
+</body>
+</html>

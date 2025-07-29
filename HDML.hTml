@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end; /* 對齊底部 */
+            height: 100vh;
+            background: linear-gradient(to bottom, #87CEEB, #E0F7FA);
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        /* 半圓彩虹容器 */
+        .semi-rainbow-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+        }
+
+        /* 半圓彩虹 */
+        .semi-rainbow {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* 彩虹條共用樣式 - 改進版 */
+        .rainbow-band {
+            position: absolute;
+            border-radius: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0;
+        }
+
+        /* 使用CSS變量簡化代碼 */
+        .band1 { /* 紅 - 最外層 */
+            width: 100%;
+            height: 100%;
+            background: #FF0000;
+            clip-path: ellipse(50% 100% at 50% 100%);
+        }
+
+        .band2 { /* 橙 */
+            width: 90%;
+            height: 90%;
+            background: #FF7F00;
+            clip-path: ellipse(45% 90% at 50% 100%);
+            bottom: 5%;
+        }
+
+        .band3 { /* 黃 */
+            width: 80%;
+            height: 80%;
+            background: #FFFF00;
+            clip-path: ellipse(40% 80% at 50% 100%);
+            bottom: 10%;
+        }
+
+        .band4 { /* 綠 */
+            width: 70%;
+            height: 70%;
+            background: #00FF00;
+            clip-path: ellipse(35% 70% at 50% 100%);
+            bottom: 15%;
+        }
+
+        .band5 { /* 藍 */
+            width: 60%;
+            height: 60%;
+            background: #0000FF;
+            clip-path: ellipse(30% 60% at 50% 100%);
+            bottom: 20%;
+        }
+
+        .band6 { /* 靛 */
+            width: 50%;
+            height: 50%;
+            background: #4B0082;
+            clip-path: ellipse(25% 50% at 50% 100%);
+            bottom: 25%;
+        }
+
+        .band7 { /* 紫 - 最內層 */
+            width: 40%;
+            height: 40%;
+            background: #9400D3;
+            clip-path: ellipse(20% 40% at 50% 100%);
+            bottom: 30%;
+        }
+
+        /* 地面效果 - 改進版 */
+        .ground {
+            position: absolute;
+            width: 100%;
+            height: 30px;
+            background: linear-gradient(to right, #4CAF50, #8BC34A, #4CAF50);
+            bottom: 0;
+            z-index: 10;
+            box-shadow: 0 -5px 10px rgba(0,0,0,0.2);
+        }
+
+        /* 雲朵裝飾 - 改進版 */
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            filter: blur(8px);
+            opacity: 0.9;
+            animation: cloud-move 20s linear infinite;
+        }
+
+        .cloud1 {
+            width: 80px;
+            height: 40px;
+            top: 20px;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .cloud2 {
+            width: 100px;
+            height: 50px;
+            top: 40px;
+            right: 15%;
+            animation-delay: -5s;
+        }
+
+        .cloud3 {
+            width: 60px;
+            height: 30px;
+            top: 60px;
+            left: 25%;
+            animation-delay: -10s;
+        }
+
+        /* 雲朵動畫 */
+        @keyframes cloud-move {
+            0% { transform: translateX(-100px); }
+            100% { transform: translateX(calc(100vw + 100px)); }
+        }
+
+        /* 標題樣式 */
+        .title {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            text-align: center;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            font-size: 2.5em;
+            z-index: 5;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="title">半圓形彩虹效果</h1>
+    
+    <div class="semi-rainbow-container">
+        <div class="semi-rainbow">
+            <!-- 彩虹色帶 -->
+            <div class="rainbow-band band1"></div>
+            <div class="rainbow-band band2"></div>
+            <div class="rainbow-band band3"></div>
+            <div class="rainbow-band band4"></div>
+            <div class="rainbow-band band5"></div>
+            <div class="rainbow-band band6"></div>
+            <div class="rainbow-band band7"></div>
+            
+            <!-- 地面 -->
+            <div class="ground"></div>
+            
+            <!-- 裝飾雲朵 -->
+            <div class="cloud cloud1"></div>
+            <div class="cloud cloud2"></div>
+            <div class="cloud cloud3"></div>
+        </div>
+    </div>
+</body>
+</html>
